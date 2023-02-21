@@ -1,5 +1,5 @@
 import { type } from "os"
-import { DeployCombo } from "../models/combos"
+import { DeployCombo } from "./combos"
 
 export enum ninjaAttrs {
     red,
@@ -8,12 +8,18 @@ export enum ninjaAttrs {
     yellow
 }
 
-
 export interface Ninja {
     name: string
-    atas: ninjaAttrs,
-    kanan: ninjaAttrs,
-    bawah: ninjaAttrs,
-    kiri: ninjaAttrs,
-    availabe_combos: Array<DeployCombo>
+    atas: ninjaAttrs
+    kanan: ninjaAttrs
+    bawah: ninjaAttrs
+    kiri: ninjaAttrs
+    availabe_combos: DeployCombo[]
+}
+
+export type ninjaT = {
+    [key: string]: {
+        id: number
+        attribute: string[]
+    }
 }
