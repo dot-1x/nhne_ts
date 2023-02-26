@@ -12,12 +12,18 @@ class Combo{
     }
 
     get total() {
-        const [attack, agility, defend, hp] = [
-            this.combos.reduce((p, c) => p += c.attack, 0),
-            this.combos.reduce((p, c) => p += c.agility, 0),
-            this.combos.reduce((p, c) => p += c.defend, 0),
-            this.combos.reduce((p, c) => p += c.hp, 0),
-        ]
+        const reduced = this.combos.reduce(
+            (prev, current) => (
+                {
+                    atk: prev.atk += current.attack,
+                    def: prev.def += current.defend,
+                    hp: prev.hp += current.hp,
+                    agi: prev.agi += current.agility
+                }
+            ),
+            { atk: 0, def: 0, hp: 0, agi: 0 }
+        )
+        const { atk: attack, agi: agility, def: defend, hp: hp } = reduced
         return `(attack: ${attack}, defend: ${defend}, hp: ${hp}, agility: ${agility},)`
     }
 
