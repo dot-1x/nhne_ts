@@ -1,4 +1,4 @@
-import {DeployCombo, attributes, comboT} from "../models/combos"
+import {DeployCombo, attributes, comboT} from "../types/combos"
 import combos from "../deploy_combos.json"
 import { type } from "os"
 
@@ -20,13 +20,7 @@ export function getCombo(name: string): DeployCombo {
     if (!combo) return defaultCombo;
     return {
         name: name,
-        id: combo.id,
-        attack: combo.attack,
-        defend: combo.defend,
-        hp: combo.hp,
-        agility: combo.agility,
-        trigger: combo.trigger,
-        ninjas: combo.ninjas,
+        ...combo,
         get attrs() : attributes {
             return [this.attack, this.defend, this.hp, this.agility]
         }

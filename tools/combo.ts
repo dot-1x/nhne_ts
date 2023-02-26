@@ -1,14 +1,14 @@
-import { DeployCombo } from "./models/combos";
-import { getCombo, getCombos } from "./utils/combo";
+import { DeployCombo } from "./types/combos";
+import { getCombo, getCombos } from "./utils/utils.combo";
 import combos from "./deploy_combos.json"
 
 
-type keys = "hp" | "attack" | "defend" | "agility"
+type Keys = "hp" | "attack" | "defend" | "agility"
 
 class Combo{
     combos: DeployCombo[]
-    constructor(combos_: DeployCombo[]) {
-        this.combos = combos_
+    constructor(combos: DeployCombo[]) {
+        this.combos = combos
     }
 
     get total() {
@@ -25,14 +25,14 @@ class Combo{
         return this.combos.length
     }
 
-    sort(by: keys, asc?: boolean) {
+    sort(by: Keys, asc?: boolean) {
         if (!["hp", "attack", "defend", "agility"].includes(by)) throw new Error("Invalid argument specifiers");
         return this.combos.sort(
             (a, b) => asc? a[by] - b[by] : b[by] - a[by]
         )
     }
 
-    filter(by: keys) {
+    filter(by: Keys) {
         /**
          * return an array filtering combo by key
          * @param by specify which key to filter
@@ -41,6 +41,7 @@ class Combo{
             (v) => v[by] > 0
         )
     }
+
 }
 
 function getAllCombo() {
@@ -50,10 +51,10 @@ function getAllCombo() {
     return new Combo(getCombos(...Object.keys(combos)))
 }
 
-function filterAllCombo(by: keys[]) {
+function filterAllCombo(by: Keys[]) {
     /**
-     * will get all available combo
-     * and filter them by key
+     * return all available combos and filter by keys
+     * @param by Array<key> to filter
      */
     const combs = getCombos(...Object.keys(combos)).filter(
         (v) => {
@@ -64,4 +65,4 @@ function filterAllCombo(by: keys[]) {
         }
     )
     return new Combo(combs)
-}
+} 
