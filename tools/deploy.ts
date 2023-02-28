@@ -4,7 +4,7 @@ import { checkConnected } from "./utils/utils.deploy"
 import { getNinjas } from "./utils/utils.ninja"
 
 
-class Deploy{
+export class Deploy{
     main_ninjas: Ninja[]
     deploy_ninjas: Ninja[]
     current_branchs: number

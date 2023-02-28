@@ -9,7 +9,7 @@ export enum NinjaAttrs {
 }
 
 export interface Ninja {
-    name: string | null
+    name: string
     atas: NinjaAttrs
     kanan: NinjaAttrs
     bawah: NinjaAttrs
@@ -17,7 +17,6 @@ export interface Ninja {
     availabe_combos: DeployCombo[]
 }
 
-export type ninjaRow = [Ninja, Ninja, Ninja, Ninja, Ninja]
 export type ninjaT = {
     [key: string]: {
         id: number

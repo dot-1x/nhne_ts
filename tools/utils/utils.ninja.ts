@@ -15,18 +15,9 @@ const attrMapping: {[key: string]: NinjaAttrs} = {
 const NINJAS = ninjas as ninjaT
 const COMBOS = combos as comboT
 
-const defaultNinja: Ninja = {
-    name: null,
-    atas: NinjaAttrs.BLUE,
-    kanan: NinjaAttrs.BLUE,
-    bawah: NinjaAttrs.BLUE,
-    kiri: NinjaAttrs.BLUE,
-    availabe_combos: []
-}
-
-export function getNinja(name: string): Ninja {
+export function getNinja(name: string): Ninja | null {
     const ninja = NINJAS[name]
-    if (!ninja) return defaultNinja;
+    if (!ninja) return null;
     const [atas, kanan, bawah, kiri] = ninja.attribute.map(v => attrMapping[v])
     return {
         name,
@@ -36,19 +27,19 @@ export function getNinja(name: string): Ninja {
         kiri: kiri,
         get availabe_combos(): DeployCombo[] {
             const found = Object.entries(COMBOS).filter(
-                ([, val]) => this.name ? val.ninjas.includes(this.name) : false 
+                ([, val]) => val.ninjas.includes(this.name)
             ).map(
                 ([key,]) => getCombo(key)
             )
-            return found
+            return found as DeployCombo[]
         }
     }
 }
 
-export function getNinjas(...names: string[]) {
+export function getNinjas(...names: string[]): Ninja[] {
     return names.map(
         v => getNinja(v)
     ).filter(
-        v => v.name != null
-    )
+        v => v
+    ) as Ninja[]
 }

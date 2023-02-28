@@ -1,17 +1,22 @@
 import { DeployCombo } from "./types/combos";
 import { getCombo, getCombos } from "./utils/utils.combo";
 import combos from "./deploy_combos.json"
+import { inspect } from "util";
+import { getNinjas } from "./utils/utils.ninja";
 
 
 type Keys = "hp" | "attack" | "defend" | "agility"
 
-class Combo{
+export class Combo{
     combos: DeployCombo[]
     constructor(combos: DeployCombo[]) {
         this.combos = combos
     }
 
     get total() {
+        /**
+         * return current total atrribute
+         */
         const reduced = this.combos.reduce(
             (prev, current) => (
                 {
@@ -24,11 +29,25 @@ class Combo{
             { atk: 0, def: 0, hp: 0, agi: 0 }
         )
         const { atk: attack, agi: agility, def: defend, hp: hp } = reduced
-        return `(attack: ${attack}, defend: ${defend}, hp: ${hp}, agility: ${agility},)`
+        return `(attack: ${attack}, defend: ${defend}, hp: ${hp}, agility: ${agility})`
     }
 
     get length() {
         return this.combos.length
+    }
+
+    get comboNames() {
+        /**
+         * return current combo names
+         */
+        return this.combos.map(v => v.name)
+    }
+
+    get attrTable() {
+        /**
+         * returns attribute of current combos
+         */
+        return this.combos.map(v => [v.attack, v.defend, v.hp, v.agility])
     }
 
     sort(by: Keys, asc?: boolean) {
@@ -47,28 +66,25 @@ class Combo{
             (v) => v[by] > 0
         )
     }
-
 }
 
-function getAllCombo() {
+export function getAllCombo() {
     /**
      * return all available combo
      */
     return new Combo(getCombos(...Object.keys(combos)))
 }
 
-function filterAllCombo(by: Keys[]) {
+export function filterAllCombo(by: Keys[]) {
     /**
      * return all available combos and filter by keys
      * @param by Array<key> to filter
      */
     const combs = getCombos(...Object.keys(combos)).filter(
-        (v) => {
-            for (const key of by) {
-                if (v[key] > 0) return true;
-            }
-            return false
-        }
+        v => by.some(key => v[key] > 0)
     )
     return new Combo(combs)
-} 
+}
+
+
+console.log(filterAllCombo(["hp"]).length);

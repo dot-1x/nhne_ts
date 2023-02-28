@@ -3,21 +3,10 @@ import combos from "../deploy_combos.json"
 import { type } from "os"
 
 const COMBOS = combos as comboT
-const defaultCombo: DeployCombo = {
-    name: "null",
-    id: -1,
-    attack: 0,
-    defend: 0,
-    hp: 0,
-    agility: 0,
-    trigger: false,
-    attrs: [0, 0, 0, 0],
-    ninjas: []
-}
 
-export function getCombo(name: string): DeployCombo {
+export function getCombo(name: string): DeployCombo | null {
     const combo = COMBOS[name]
-    if (!combo) return defaultCombo;
+    if (!combo) return null;
     return {
         name: name,
         ...combo,
@@ -27,10 +16,10 @@ export function getCombo(name: string): DeployCombo {
     }
 }
 
-export function getCombos(...names: string[]) {
+export function getCombos(...names: string[]): DeployCombo[] {
     return names.map(
         v => getCombo(v)
     ).filter(
-        v => v.name !== "null"
-    )
+        v => v
+    ) as DeployCombo[]
 }

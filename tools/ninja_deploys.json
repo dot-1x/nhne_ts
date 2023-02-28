@@ -1231,5 +1231,20 @@
             "Hijau",
             "Biru"
         ]
+    },
+    "Sage Jiraiya": {
+        "id": 237,
+        "attribute": [
+            "Biru",
+            "Merah",
+            "Hijau",
+            "Biru"
+        ]
+    },
+    "Himawari Uzumaki": {
+        "id": 238,
+        "attribute": [
+            
+        ]
     }
 }
