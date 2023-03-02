@@ -13,10 +13,10 @@ export class Combo{
         this.combos = combos
     }
 
+    /**
+     * return current total atrribute
+     */
     get total() {
-        /**
-         * return current total atrribute
-         */
         const reduced = this.combos.reduce(
             (prev, current) => (
                 {
@@ -36,17 +36,17 @@ export class Combo{
         return this.combos.length
     }
 
+    /**
+     * return current availabe combo by name
+     */
     get comboNames() {
-        /**
-         * return current combo names
-         */
         return this.combos.map(v => v.name)
     }
 
+    /**
+     * returns Array of attribute of current combos
+     */
     get attrTable() {
-        /**
-         * returns attribute of current combos
-         */
         return this.combos.map(v => [v.attack, v.defend, v.hp, v.agility])
     }
 
@@ -57,34 +57,31 @@ export class Combo{
         )
     }
 
+    /**
+     * return an array filtering combo by key
+     * @param by specify which key to filter
+     */
     filter(by: Keys) {
-        /**
-         * return an array filtering combo by key
-         * @param by specify which key to filter
-         */
         return this.combos.filter(
             (v) => v[by] > 0
         )
     }
 }
 
+/**
+ * return all available combo
+ */
 export function getAllCombo() {
-    /**
-     * return all available combo
-     */
     return new Combo(getCombos(...Object.keys(combos)))
 }
 
+/**
+ * return all available combos and filter by keys
+ * @param by Array of Keys to filter
+ */
 export function filterAllCombo(by: Keys[]) {
-    /**
-     * return all available combos and filter by keys
-     * @param by Array<key> to filter
-     */
     const combs = getCombos(...Object.keys(combos)).filter(
         v => by.some(key => v[key] > 0)
     )
     return new Combo(combs)
 }
-
-
-console.log(filterAllCombo(["hp"]).length);

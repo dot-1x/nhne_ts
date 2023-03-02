@@ -4,9 +4,14 @@ import { type } from "os"
 
 const COMBOS = combos as comboT
 
-export function getCombo(name: string): DeployCombo | null {
+/**
+ * will search combo name, and return that Combo if valid, null otherwise
+ * @param name combo name to search
+ * @returns DeployCombo | null
+ */
+export function getCombo(name: string): DeployCombo {
     const combo = COMBOS[name]
-    if (!combo) return null;
+    if (!combo) throw new Error(`Combo name "${name}" not found!`);
     return {
         name: name,
         ...combo,
@@ -16,10 +21,13 @@ export function getCombo(name: string): DeployCombo | null {
     }
 }
 
+/**
+ * iterate through all passed name, and get them and filter invalid combo name
+ * @param names combo name to search
+ * @returns DeployCombo[]
+ */
 export function getCombos(...names: string[]): DeployCombo[] {
     return names.map(
         v => getCombo(v)
-    ).filter(
-        v => v
-    ) as DeployCombo[]
+    )
 }
